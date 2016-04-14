@@ -1,5 +1,7 @@
 import React, { PropTypes } from 'react'
-import '../../styles/core.scss'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap/dist/css/bootstrap-theme.css'
+import 'styles/core.scss'
 
 export class CoreLayout extends React.Component {
   static propTypes = {
