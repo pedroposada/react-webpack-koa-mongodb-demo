@@ -8,6 +8,9 @@ import { default as koajwt } from 'koa-jwt'
 import convert from 'koa-convert'
 import routes from './routes'
 
+export const JWT_SECRET = 'my secret'
+export const JWT_TTL = 60*60*5 // time in seconds
+
 /**
   * Error handling - function to display stack trace and line numbers in terminal
 */
@@ -85,13 +88,13 @@ mongoose.connect('127.0.0.1:27017/todosdemo')
  * JWT authentication control
  * all paths protected by default
  */
-// app.use(koajwt({ secret: config.jwtSecret }).unless({ path: [
-//   // add unprotected paths here
-//   // /regex for path/, ...
+app.use(convert(koajwt({ secret: JWT_SECRET }).unless({ path: [
+  // add unprotected paths here
+  // /regex for path/, ...
 
-//   /^\/api\/login/,
-//   /^\/favicon.ico/,
-// ]}))
+  /^\/api\/login/,
+  /^\/favicon.ico/,
+]})))
 
 /**
  * REST routes

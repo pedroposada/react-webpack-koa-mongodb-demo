@@ -1,16 +1,16 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import LoginForm from 'forms/LoginForm'
 
 type Props = {
 
-}
+};
 export class LoginPage extends React.Component {
   props: Props;
 
-  render() {
+  render () {
     return (
-      <div></div>
+      <div><LoginForm {...this.props} /></div>
     )
   }
 }

@@ -1,11 +1,10 @@
 import React from 'react'
-import Todolist from 'containers/Todolist'
-import { PageHeader, Grid, Row, Col } from 'react-bootstrap'
+import { Grid, Row, Col } from 'react-bootstrap'
+import { default as FrontPageContainer } from 'containers/FrontPage'
 
 type Props = {
-
 };
-export class FrontPage extends React.Component {
+export class FrontPageView extends React.Component {
   props: Props;
 
   render () {
@@ -13,8 +12,7 @@ export class FrontPage extends React.Component {
       <Grid>
         <Row>
           <Col xs={6}>
-            <PageHeader>Todos Demo</PageHeader>
-            <Todolist />
+            <FrontPageContainer {...this.props} />
           </Col>
         </Row>
       </Grid>
@@ -22,4 +20,4 @@ export class FrontPage extends React.Component {
   }
 }
 
-export default FrontPage
+export default FrontPageView

@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken'
+import { JWT_SECRET, JWT_TTL } from '../index'
 
 /**
  * ------------------------ ACTIONS -----------
@@ -12,23 +13,22 @@ export const login = () => {
   return async (ctx, next) => {
     await next()
     let result
-    const username = ctx.request.body.username
-    const password = ctx.request.body.password
+
+    const { username, password } = ctx.request.body
 
     // @todo: use real accounts
     let account = false
-    if (username === 'testusername' && password === 'testpassword') {
+    if (username === 'test' && password === 'test') {
       account = {
         roles: ['AUTHENTICATED'],
-        username: 'testusername',
-        password: 'testpassword',
+        username: 'testusername'
       }
     }
     if (account === false) {
       ctx.throw('Invalid credentials.', 400)
     }
 
-    result = jwt.sign(account, 'topsecret', { expiresIn: 60*60*5 }) // time in seconds
+    result = jwt.sign(account, JWT_SECRET, { expiresIn: JWT_TTL }) // time in seconds
     return ctx.body = { token: result }
   }
 }
@@ -42,16 +42,12 @@ export const addTodo = (model) => {
     await next()
     let result
     const body = ctx.request.body
-    try {
-      result = await model.create({
-        text: body.text,
-        completed: false,
-        weight: Number(body.weight)
-      })
-      return ctx.body = { todo: result }
-    } catch (err) {
-      throw err
-    }
+    result = await model.create({
+      text: body.text,
+      completed: false,
+      weight: Number(body.weight)
+    })
+    return ctx.body = result
   }
 }
 
@@ -64,12 +60,8 @@ export const updateTodo = (model) => {
     await next()
     let result
     const body = ctx.request.body
-    try {
-      result = await model.findOneAndUpdate({ _id: body._id }, body).lean().exec()
-      return ctx.body = result
-    } catch (err) {
-      throw err
-    }
+    result = await model.findOneAndUpdate({ _id: body._id }, body, {}).lean().exec()
+    return ctx.body = result
   }
 }
 
@@ -81,11 +73,7 @@ export const readTodos = (model) => {
   return async (ctx, next) => {
     await next()
     let result, todos
-    try {
-      result = await model.find().lean().exec()
-      return ctx.body = { todos: result }
-    } catch (err) {
-      throw err
-    }
+    result = await model.find().lean().exec()
+    return ctx.body = result
   }
 }

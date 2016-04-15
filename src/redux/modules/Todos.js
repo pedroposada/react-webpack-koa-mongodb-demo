@@ -1,27 +1,4 @@
-import { xhttp } from 'xhttp'
-
-/**
- * ------------------- AJAX -------------------------
- */
-
-const url = 'http://localhost:5000/api'
-const token = () => (localStorage.getItem('token') || 'TOKEN')
-
-// Promise wrapper for xhttp
-const rp = (options: Object): Function => {
-  return (dispatch: Function, getState: Function): Promise => {
-    return new Promise((resolve: Function, reject: Function): void => {
-      xhttp(options, resolve, (response, xhr) => {
-        if (xhr.statusText === 'Unauthorized') {
-          dispatch(displayError('Unauthorized'))
-          // dispatch(logoutUser())
-          return
-        }
-        reject()
-      })
-    })
-  }
-}
+import { URL, actions as apiActions } from 'redux/modules/Apis'
 
 /**
  * ------------------- ACTIONS -------------------------
@@ -32,56 +9,50 @@ export const ADD_TODO = 'ADD_TODO'
 export const LOAD_TODOS = 'LOAD_TODOS'
 export const UPDATE_TODO = 'UPDATE_TODO'
 export const CHANGE_FIELD = 'CHANGE_FIELD'
-export const DISPLAY_ERROR = 'DISPLAY_ERROR'
+export const LAST_ERROR = 'LAST_ERROR'
 
 // Action Creators
 const onAdd = (text) => {
   return (dispatch, getState) => {
-    dispatch(rp({
-      url: `${url}/todos`,
+    dispatch(apiActions.callApi({
+      url: `${URL}/todos`,
       method: 'POST',
       body: {
         text: text,
         completed: false,
         weight: 0
-      },
-      json: true,
-      headers: { 'Authorization': `Bearer ${token()}` }
+      }
     }))
-    .then(({ todo }) => {
+    .then((todo) => {
       dispatch(addTodo(todo))
     })
     .catch(() => {
-      dispatch(displayError('Server error'))
+      dispatch(lastError('Server error'))
     })
   }
 }
 const onUpdate = (index, todo) => {
   return (dispatch, getState) => {
-    dispatch(rp({
-      url: `${url}/todos`,
+    dispatch(apiActions.callApi({
+      url: `${URL}/todos`,
       method: 'PUT',
-      body: todo,
-      json: true,
-      headers: { 'Authorization': `Bearer ${token()}` }
+      body: todo
     }))
     .then(() => {
       dispatch(updateTodo(index, todo))
     })
     .catch(() => {
-      dispatch(displayError('Server error'))
+      dispatch(lastError('Server error'))
     })
   }
 }
 const onLoad = () => {
   return (dispatch, getState) => {
-    dispatch(rp({
-      url: `${url}/todos`,
-      method: 'GET',
-      json: true,
-      headers: { 'Authorization': `Bearer ${token()}` }
+    dispatch(apiActions.callApi({
+      url: `${URL}/todos`,
+      method: 'GET'
     }))
-    .then(({todos}) => {
+    .then((todos) => {
       if (Array.isArray(todos)) {
         dispatch(loadTodos(todos))
       } else {
@@ -89,23 +60,21 @@ const onLoad = () => {
       }
     })
     .catch(() => {
-      dispatch(displayError('Server error'))
+      dispatch(lastError('Server error'))
     })
   }
 }
 const addTodo = (todo) => ({ type: ADD_TODO, todo })
 const updateTodo = (index, todo) => ({ type: UPDATE_TODO, index, todo })
 const loadTodos = (todos: Array) => ({ type: LOAD_TODOS, todos })
-const onChangeField = (text) => ({ type: CHANGE_FIELD, text })
-const displayError = (text) => ({ type: DISPLAY_ERROR, text })
+const lastError = (text) => ({ type: LAST_ERROR, text })
 
 export const actions = {
   addTodo,
   onAdd,
   onUpdate,
   onLoad,
-  updateTodo,
-  onChangeField
+  updateTodo
 }
 
 /**
@@ -114,7 +83,6 @@ export const actions = {
  */
 export const initialState = {
   todos: [],
-  todoFieldValue: '',
   error: ''
 }
 
@@ -138,9 +106,7 @@ export default (state = initialState, action) => {
           ...state.todos.slice(+action.index + 1)
         ]
       })
-    case CHANGE_FIELD:
-      return Object.assign({}, state, { todoFieldValue: action.text })
-    case DISPLAY_ERROR:
+    case LAST_ERROR:
       return Object.assign({}, state, { error: action.text })
     case LOAD_TODOS:
       return Object.assign({}, state, { todos: action.todos })

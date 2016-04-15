@@ -15,7 +15,8 @@ type Props = {
   handleSubmit: Function,
   Todos: Object,
   onChangeField: Function,
-  resetForm: Function
+  resetForm: Function,
+  onAdd: Function
 };
 class TodoForm extends Component {
   props: Props;
@@ -23,12 +24,17 @@ class TodoForm extends Component {
   render () {
     const {
       fields: { newtodo },
-      handleSubmit
+      handleSubmit,
+      onAdd,
+      resetForm
     } = this.props
 
     return (
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit((data) => {
+          onAdd(data)
+          resetForm()
+        })}
         >
         <Row>
           <Col xs={10}>

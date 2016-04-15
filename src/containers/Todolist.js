@@ -1,15 +1,12 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import TodoForm from 'forms/TodoForm'
-import { actions as todosActions } from 'redux/modules/Todos'
 import Todo from 'components/Todo/Todo'
+import TodoForm from 'forms/TodoForm'
 
 type Props = {
   onAdd: Function,
   onLoad: Function,
-  onChangeField: Function,
-  Todos: Object,
-  onUpdate: Function
+  onUpdate: Function,
+  Todos: Object
 };
 export class Todolist extends Component {
   props: Props;
@@ -25,7 +22,7 @@ export class Todolist extends Component {
       <div>
         <TodoForm
           {...this.props}
-          onSubmit={onAdd}
+          onAdd={onAdd}
           />
         {[...todos.map((item, index) => {
           return <Todo
@@ -39,26 +36,4 @@ export class Todolist extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    TodoForm: state.form,
-    Todos: state.Todos
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onAdd: ({ newtodo }) => dispatch(todosActions.onAdd(newtodo)),
-    onLoad: () => dispatch(todosActions.onLoad()),
-    onChangeField: (text) => dispatch(todosActions.onChangeField(text)),
-    onUpdate: (index, todo) => () => {
-      const todoItem = Object.assign({}, todo, { completed: !todo.completed })
-      dispatch(todosActions.onUpdate(index, todoItem))
-    }
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Todolist)
+export default Todolist
