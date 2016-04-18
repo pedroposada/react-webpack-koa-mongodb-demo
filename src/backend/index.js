@@ -38,17 +38,6 @@ const app = new Koa()
 /**
  * error handling
  */
-// app.use(async (ctx, next) => {
-//   try {
-//     await next()
-//   } catch (err) {
-//     ctx.app.emit('error', err, ctx)
-//   }
-// })
-
-/**
- * logger
- */
 app.use(async (ctx, next) => {
   const start = new Date
   try {
@@ -61,7 +50,9 @@ app.use(async (ctx, next) => {
       message: err.message,
       status: err.status
     }
-    dumpError(err)
+    if (process.env === 'development') {
+      dumpError(err)
+    }
   }
 })
 
@@ -105,6 +96,12 @@ routes(router)
 app
   .use(router.routes())
   .use(router.allowedMethods());
+
+/**
+ * export app with middleware
+ * usefull for unit testing and nested apps
+ */
+export default app
 
 /**
  * Start server

@@ -60,7 +60,7 @@ export const updateTodo = (model) => {
     await next()
     let result
     const body = ctx.request.body
-    result = await model.findOneAndUpdate({ _id: body._id }, body, {}).lean().exec()
+    result = await model.findOneAndUpdate({ _id: body._id }, body, { new: true }).lean().exec()
     return ctx.body = result
   }
 }
