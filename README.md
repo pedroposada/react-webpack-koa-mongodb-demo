@@ -21,14 +21,22 @@ Application written in Javascript to illustrate the use and implementation of a 
 
 ## Commands
 ##### Clone repo
-`git clone https://github.com/pedroposada/react-webpack-koa-mongodb-demo.git todos-demo && cd todos-demo`
+```
+git clone https://github.com/pedroposada/react-webpack-koa-mongodb-demo.git todos-demo && cd todos-demo
+```
 ##### Resolve and install dependencies
-`npm install`
+```
+npm install
+```
 ##### Restore sample database into MongoDB
-`npm run restoredb`
+```
+npm run restoredb
+```
 This command will restore a new database with name "todosdemo" that contains a collection called "todos".
 ##### Run tests for the Koa server
-`npm run backend:test`
+```
+npm run backend:test
+```
 
 
 ## References
