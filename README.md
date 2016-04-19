@@ -1,6 +1,8 @@
-# Todos Demo - React Redux JWT Koa MongoDB
+# Todos Fullstack Demo - React Redux JWT Koa MongoDB
 
-Application written in Javascript to illustrate the use and implementation of a number of libraries and techologies as follows:
+Application written in Javascript to illustrate the use and implementation of a client/server web application using React, Redux, Jason Web Token, Koa, MongoDB.
+
+This repo consists of a client-side application with a login page and a todo's list page. And a server-side application that provides an API to persist all action that happen in the client.
 
 ## Client
 - React - used for presentation layer to render styled HTML on the client (browser).
@@ -37,7 +39,18 @@ This command will restore a new database with name "todosdemo" that contains a c
 ```
 npm run backend:test
 ```
+##### Start Server
+```
+npm run backend
+```
+Server will run under http://localhost:5000
+##### Start Client
+```
+npm start
+```
+Client will run under http://localhost:3000
 
+###### Open your browser and point it to http://localhost:3000
 
 ## References
 - I did my application structure following [React Redux Starterkit](https://github.com/davezuko/react-redux-starter-kit) guidelines.
