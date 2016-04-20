@@ -1,16 +1,19 @@
 import React from 'react'
-import { Provider } from 'react-redux'
 import { mount, render, shallow } from 'enzyme'
-// import { mockStore } from 'tests/mockStore'
+import MockStore from '../MockStore'
+import Provider from '../Provider'
 import { LoginPage } from 'containers/LoginPage'
 
-const mountWithProps = (props = {}, ctx = {}) => {
-  return mount(<LoginPage {...props} />, { context: ctx })
+const shallowRender = (component) => {
+  const renderer = TestUtils.createRenderer()
+
+  renderer.render(component)
+  return renderer.getRenderOutput()
 }
 
 describe('(Container) LoginPage', () => {
   it('renders a <form />', () => {
-    let wrapper = shallow(<LoginPage />)
+    const wrapper = mount(<Provider store={MockStore}><LoginPage /></Provider>)
     expect(wrapper.find('form')).to.have.length(1)
   })
 })
