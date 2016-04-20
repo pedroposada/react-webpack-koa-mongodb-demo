@@ -31,7 +31,7 @@
     "codecov": "cat coverage/*/lcov.info | codecov",
     "backend": "better-npm-run backend",
     "backend:test": "better-npm-run backend-test",
-    "restoredb": "mongorestore --drop -d todosdemo --gzip --archive=src/backend/dump/todosdemo.bson.gz"
+    "restoredb": "mongorestore --drop -d todosdemo --gzip --archive=backend/dump/todosdemo.bson.gz"
   },
   "betterScripts": {
     "compile": {
@@ -68,14 +68,14 @@
       }
     },
     "backend": {
-      "command": "babel-watch ./src/backend --watch ./src/backend",
+      "command": "babel-watch ./backend --watch ./backend",
       "env": {
         "NODE_ENV": "development",
         "DEBUG": "app:*"
       }
     },
     "backend-test": {
-      "command": "babel-node ./node_modules/.bin/_mocha --reporter spec --require should --bail ./src/backend/tests.js",
+      "command": "babel-node ./node_modules/.bin/_mocha --reporter spec --require should --bail ./backend/tests.js",
       "env": {
         "NODE_ENV": "test",
         "DEBUG": "app:*"
