@@ -1,6 +1,6 @@
-import reducer, { initialState } from 'redux/modules/Account'
+import reducer, { initialState } from 'redux/modules/Accounts'
 
-describe('(Redux) Account', () => {
+describe('(Redux) Accounts', () => {
   describe('(Reducer)', () => {
     it('sets up initial state', () => {
       expect(reducer(undefined, {})).to.eql(initialState)
