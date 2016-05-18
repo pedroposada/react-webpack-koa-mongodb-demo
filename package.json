@@ -13,7 +13,8 @@
     "koa",
     "tutorial",
     "demo application",
-    "fullstack"
+    "fullstack",
+    "boilerplate"
   ],
   "scripts": {
     "clean": "rimraf dist",
