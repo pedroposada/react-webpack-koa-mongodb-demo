@@ -19,7 +19,16 @@ const karmaConfig = {
   ],
   singleRun: !argv.watch,
   frameworks: ['mocha'],
-  reporters: ['mocha'],
+  // reporters: ['mocha', 'tapFile'],
+  reporters: ['tap'],
+  tapReporter: {
+    outputFile: './tests/frontend.tap',
+    disableStdout: true
+  },
+  // tapFileReporter: {
+  //   outputFile: './frontend.tap',
+  //   suite: ''
+  // },
   preprocessors: {
     [`${config.dir_test}/test-bundler.js`]: ['webpack']
   },
