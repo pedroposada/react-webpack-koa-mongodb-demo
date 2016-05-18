@@ -34,7 +34,7 @@
     "test:dev": "npm run test -- --watch",
     "test:frontend": "better-npm-run test",
     "test:backend": "better-npm-run backend-test",
-    "test:all": "npm run test:frontend && npm run reformat && npm run test:backend && cat ./tests/frontend.tap > ./tests/all.tap && cat ./tests/backend.tap >> ./tests/all.tap"
+    "test:all": "npm run test:frontend && npm run reformat && npm run test:backend && cat ./tests/frontend.tap > ./all.tap && cat ./tests/backend.tap >> ./all.tap"
   },
   "betterScripts": {
     "compile": {
