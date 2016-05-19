@@ -136,7 +136,6 @@
     "react-bootstrap": "^0.28.5",
     "react-dom": "^15.0.1",
     "react-redux": "^4.0.0",
-    "react-reorderable": "^0.2.3",
     "react-router": "^2.0.0",
     "react-router-redux": "^4.0.0",
     "redux": "^3.0.0",
