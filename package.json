@@ -30,11 +30,9 @@
     "codecov": "cat coverage/*/lcov.info | codecov",
     "backend": "better-npm-run backend",
     "restoredb": "mongorestore --drop -d todosdemo --gzip --archive=backend/dump/todosdemo.bson.gz",
-    "reformat": "tail -r -n 1 ./tests/frontend.tap > ./tests/frontend-tmp.tap && sed '$d' ./tests/frontend.tap >> ./tests/frontend-tmp.tap && mv ./tests/frontend-tmp.tap ./tests/frontend.tap",
     "test:dev": "npm run test -- --watch",
     "test:frontend": "better-npm-run test",
-    "test:backend": "better-npm-run backend-test",
-    "test:all": "npm run test:frontend && npm run reformat && npm run test:backend && cat ./tests/frontend.tap > ./all.tap && cat ./tests/backend.tap >> ./all.tap"
+    "test:backend": "better-npm-run backend-test"
   },
   "betterScripts": {
     "compile": {
